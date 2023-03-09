@@ -12,5 +12,9 @@ setup(
             ('**.js', 'javascript', None),
             ('**/templates/**.html', 'ckan', None),
         ],
-    }
+    },
+    entry_points='''
+        [ckan.plugins]
+        local_development=ckanext.development.plugin:DevelopmentPlugin
+    ''',
 )

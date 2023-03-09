@@ -4,7 +4,7 @@ import ckan.plugins.toolkit as toolkit
 
 class DevelopmentPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
-    
+
 
     # IConfigurer
 
@@ -13,4 +13,4 @@ class DevelopmentPlugin(plugins.SingletonPlugin):
         toolkit.add_public_directory(config_, "public")
         toolkit.add_resource("assets", "development")
 
-    
+

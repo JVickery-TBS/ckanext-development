@@ -1,0 +1,23 @@
+{% ckan_extends %}
+
+{% block secondary_content %}
+
+  {{ super() }}
+
+  {% if h.plugin_loaded('dcat') %}
+
+    <section class="module module-narrow module-shallow meta-formats">
+      <h2 class="module-heading"><i class="fa fa-info-circle"></i> {{ _('Meta Formats') }}</h2>
+      <ul>
+        {% with endpoint=h.dcat_get_endpoint('dataset')  %}
+        <li><a target="_blank" href="{{ h.url_for(endpoint, _id=pkg.id, _format='n3', _external=True) }}">n3</a></li>
+        <li><a target="_blank" href="{{ h.url_for(endpoint, _id=pkg.id, _format='ttl', _external=True) }}">ttl</a></li>
+        <li><a target="_blank" href="{{ h.url_for(endpoint, _id=pkg.id, _format='xml', _external=True) }}">xml</a></li>
+        <li><a target="_blank" href="{{ h.url_for(endpoint, _id=pkg.id, _format='jsonld', _external=True) }}">jsonld</a></li>
+      {% endwith %}
+      </ul>
+    </section>
+
+  {% endif %}
+
+{% endblock %}

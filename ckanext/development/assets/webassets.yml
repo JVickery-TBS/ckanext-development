@@ -1,0 +1,14 @@
+# development-js:
+#   filter: rjsmin
+#   output: ckanext-development/%(version)s-development.js
+#   contents:
+#     - js/development.js
+#   extra:
+#     preload:
+#       - base/main
+
+# development-css:
+#   filter: cssrewrite
+#   output: ckanext-development/%(version)s-development.css
+#   contents:
+#     - css/development.css

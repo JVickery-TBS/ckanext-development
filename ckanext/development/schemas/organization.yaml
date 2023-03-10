@@ -32,11 +32,11 @@ fields:
       fr: "Titre (français)"
   fluent_help_text:
     en:
-      en: Title for the organization. Should be an applied title if one exists.
-      fr: Titre de l'organisation. Devrait être un titre appliqué s'il en existe un.
+      en: Title for the organization
+      fr: Titre de l'organisation
     fr:
-      en: Title for the organization. Should be an applied title if one exists.
-      fr: Titre de l'organisation. Devrait être un titre appliqué s'il en existe un.
+      en: Title for the organization
+      fr: Titre de l'organisation
   required: true
   # copied from fluent_text preset
   form_snippet: fluent_text.html
@@ -44,5 +44,31 @@ fields:
     size: 75
   display_snippet: fluent_text.html
   error_snippet: fluent_text.html
-  validators: fluent_text unicode scheming_required canada_org_title_translated_save
+  validators: fluent_text unicode_safe scheming_required
   output_validators: fluent_core_translated_output
+
+# Field = URL.
+# {The organization's URL}
+- field_name: name
+  label: URL
+  help_text:
+    en: The slug for the Organization
+    fr: La limace pour l'Organisation
+  required: true
+  validators: not_empty unicode_safe name_validator group_name_validator
+  form_snippet: slug.html
+  form_attrs:
+    size: 45
+
+- preset: translatable_org_notes
+
+# Field = Image.
+# {The organization's Image}
+- field_name: url
+  label: Image URL
+  help_text:
+    en: An image to display for the Organization
+    fr: Une image à afficher pour l'Organisation
+  required: false
+  validators: ignore_missing unicode_safe remove_whitespace
+  form_snippet: organization_upload.html

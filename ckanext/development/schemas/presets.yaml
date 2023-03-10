@@ -175,3 +175,37 @@ presets:
     display_snippet: fluent_markdown.html
     error_snippet: fluent_text.html
     validators: fluent_text
+
+# Field = Description (English).
+# Markdown formatting Property = http://daringfireball.net/projects/markdown/syntax
+# {An account of the dataset, in English. A description may include abstract, table of contents or a free-text.}
+# Field = Description (French).
+# Markdown formatting Property = http://daringfireball.net/projects/markdown/syntax
+#{An account of the dataset, in French. A description may include abstract, table of contents or a free-text.}
+- preset_name: translatable_org_notes
+  values:
+    field_name: notes_translated
+    label:
+      en: Description
+      fr: Description
+    fluent_form_label:
+      en:
+        en: "Description (English)"
+        fr: "Description (anglais)"
+      fr:
+        en: "Description (French)"
+        fr: "Description (français)"
+    fluent_help_text:
+      en:
+        en: "An account of the organization, in English. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resources and datasets."
+        fr: "Description du jeu de données, en anglais. La description peut comprendre un résumé, une table des matières ou un texte libre."
+      fr:
+        en: "An account of the organization, in French. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resources and datasets."
+        fr: "Description du jeu de données, en anglais. La description peut comprendre un résumé, une table des matières ou un texte libre."
+    required: true
+    # copied from fluent_markdown preset
+    form_snippet: fluent_markdown.html
+    display_snippet: fluent_markdown.html
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_core_translated_output

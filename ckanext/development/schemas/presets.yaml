@@ -103,7 +103,8 @@ presets:
     error_snippet: fluent_text.html
     validators: fluent_tags
     output_validators: fluent_tags_output
-    classes: control-full
+    classes:
+      - control-full
     form_attrs:
       style: "width: 100%"
       data-module: "autocomplete"

@@ -175,6 +175,7 @@ presets:
     display_snippet: fluent_markdown.html
     error_snippet: fluent_text.html
     validators: fluent_text
+    output_validators: fluent_core_translated_output
 
 # Field = Description (English).
 # Markdown formatting Property = http://daringfireball.net/projects/markdown/syntax
@@ -206,6 +207,38 @@ presets:
     # copied from fluent_markdown preset
     form_snippet: fluent_markdown.html
     display_snippet: fluent_markdown.html
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_core_translated_output
+
+# Field = Title English.
+# {The English name by which the dataset is known}
+# Field = Title (French).
+# {The French name by which the dataset is known}
+- preset_name: translatable_org_title
+  values:
+    field_name: title_translated
+    label:
+      en: Title
+      fr: Titre
+    fluent_form_label:
+      en:
+        en: "Title (English)"
+        fr: "Titre (anglais)"
+      fr:
+        en: "Title (French)"
+        fr: "Titre (français)"
+    fluent_help_text:
+      en:
+        en: Title for the organization
+        fr: Titre de l'organisation
+      fr:
+        en: Title for the organization
+        fr: Titre de l'organisation
+    required: true
+    # copied from fluent_text preset
+    form_snippet: fluent_text.html
+    display_snippet: fluent_text.html
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_core_translated_output

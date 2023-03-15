@@ -24,7 +24,11 @@ dataset_fields:
 
 - preset: translatable_notes
 
-- preset: translatable_tags
+#- preset: translatable_tags
+- field_name: tag_string
+  label: Tags
+  preset: tag_string_autocomplete
+  form_placeholder: eg. economy, mental health, government
 
 - field_name: license_id
   label: License

@@ -21,6 +21,10 @@ class DevelopmentPlugin(plugins.SingletonPlugin):
             ckanext.development:schemas/organization.yaml
             """
 
+        config_['scheming.group_schemas'] = """
+            ckanext.development:schemas/group.yaml
+            """
+
         config_['scheming.presets'] = """
             ckanext.scheming:presets.json
             ckanext.fluent:presets.json

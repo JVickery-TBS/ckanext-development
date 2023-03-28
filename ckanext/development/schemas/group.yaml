@@ -1,0 +1,44 @@
+scheming_version: 2
+group_type: group
+about: A reimplementation of the default CKAN group schema
+about_url: http://github.com/ckan/ckanext-scheming
+
+form_languages:
+- en
+- fr
+# machine translated metadata:
+alternate_languages:
+  en:
+    - en-t-fr
+  fr:
+    - fr-t-en
+
+fields:
+
+- preset: translatable_group_title
+
+# Field = URL.
+# {The organization's URL}
+- field_name: name
+  label: URL
+  help_text:
+    en: The slug for the Group
+    fr: La limace pour le groupe
+  required: true
+  validators: not_empty unicode_safe name_validator group_name_validator
+  form_snippet: slug.html
+  form_attrs:
+    size: 45
+
+- preset: translatable_group_notes
+
+# Field = Image.
+# {The organization's Image}
+- field_name: url
+  label: Image URL
+  help_text:
+    en: An image to display for the Group
+    fr: Une image à afficher pour le groupe
+  required: false
+  validators: ignore_missing unicode_safe remove_whitespace
+  form_snippet: organization_upload.html

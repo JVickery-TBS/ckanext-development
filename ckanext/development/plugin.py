@@ -1,9 +1,25 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
+import ckan.logic.schema as schema
+from ckan.lib.plugins import DefaultDatasetForm
 
 
-class DevelopmentPlugin(plugins.SingletonPlugin):
+class DevelopmentPlugin(plugins.SingletonPlugin, DefaultDatasetForm):
     plugins.implements(plugins.IConfigurer)
+    plugins.implements(plugins.IDatasetForm, inherit=True)
+
+    # DefaultDatasetForm
+
+    def create_package_schema(self):
+        return schema.default_create_package_schema()
+
+
+    def update_package_schema(self):
+        return schema.default_update_package_schema()
+
+
+    def show_package_schema(self):
+        return schema.default_show_package_schema()
 
 
     # IConfigurer

@@ -4,7 +4,7 @@ import ckan.logic.schema as schema
 from ckan.lib.plugins import DefaultDatasetForm
 
 from ckanext.development import logic
-from ckanext.xloader import interfaces as xloader_interfaces
+from ckanext.xloader.interfaces import IXloader
 
 from logging import getLogger
 
@@ -17,7 +17,7 @@ class DevelopmentPlugin(plugins.SingletonPlugin, DefaultDatasetForm):
     plugins.implements(plugins.IDatasetForm, inherit=True)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IResourceController, inherit=True)
-    plugins.implements(xloader_interfaces.IXloader, inherit=True)
+    plugins.implements(IXloader, inherit=True)
 
     # DefaultDatasetForm
 
@@ -63,42 +63,29 @@ class DevelopmentPlugin(plugins.SingletonPlugin, DefaultDatasetForm):
     # IXloader
 
     def can_upload(self, resource_id):
+        """
+        Never allow Xloader plugin to automatically submit to be Xloadered.
+        """
+        return False
 
-        # check if file is uploded
-        try:
-            res = toolkit.get_action(u'resource_show')({'ignore_auth': True},
-                                                         {'id': resource_id})
 
-            if res.get('url_type', None) != 'upload':
-                log.error(
-                    'Only uploaded resources can be added to the Data Store.')
-                return False
+    #IActions
 
-        except toolkit.ObjectNotFound:
-            log.error('Resource %s does not exist.' % resource_id)
-            return False
-
-        # check if validation report exists and is successful
-        try:
-            validation = toolkit.get_action(u'resource_validation_show')(
-                {'ignore_auth': True},
-                {'resource_id': res['id']})
-            if validation.get('status', None) != 'success':
-                log.error(
-                    'Only validated resources can be added to the Data Store.')
-                return False
-
-        except toolkit.ObjectNotFound:
-            log.error('No validation report exists for resource %s' %
-                      resource_id)
-            return False
-
-        return True
+    def get_actions(self):
+        return {'xloader_submit': logic.force_sync_xloader_submit}
 
 
     # IResourceController
 
     def after_resource_update(self, context, resource):
+        """
+        If the Resource has a successful validation report, Xloader it synchronously.
+        """
+        # check if the resource is being updated/patched from Xloader and prevent any looping
+        if context.get('is_xloadering'):
+            del context['is_xloadering']
+            return
+
         # check if validation report exists and is successful
         try:
             validation = toolkit.get_action(u'resource_validation_show')(
@@ -113,18 +100,6 @@ class DevelopmentPlugin(plugins.SingletonPlugin, DefaultDatasetForm):
                       resource.get('id'))
             return
 
-        if context.get('xloadering'):
-            return
+        # submit to custom Xloader
+        logic.custom_xloader_submit(context, resource)
 
-        # submit to Xloader
-        toolkit.get_action("xloader_submit")(context, {
-                    "resource_id": resource.get('id'),
-                    "ignore_hash": True})
-
-
-    # IActions
-
-    def get_actions(self):
-        return {
-            'xloader_submit': logic.xloader_submit,
-        }
